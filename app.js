@@ -49,10 +49,7 @@ app.use("/api/auth/", userRoutes);
 app.use("/api/sauces", sauceRoutes);
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.post('/', upload.single('img'), (req, res, err) => {
-  if (err) throw err
-  res.status(201).send()
-})
+
 
 /*TEST  */
 
