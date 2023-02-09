@@ -21,8 +21,9 @@ exports.createSauce = (req, res, next) => {
     ...sauceObject,
     userId: req.auth.userId,
     // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    imageUrl:req.file.image.buffer
+    imageUrl:`${req.file.image.buffer}`
   });
+  console.log(imageUrl)
   sauce
     .save()
     .then(() => {

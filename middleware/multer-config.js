@@ -27,7 +27,24 @@ const storage = multer.diskStorage({
 });
 */
 
-const storage = multer.memoryStorage()
+const storage = new GridFsStorage({
+  url: 'mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority',
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err)
+        }
+        const filename = file.originalname
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads',
+        }
+        resolve(fileInfo)
+      })
+    })
+  },
+})
 
 
 module.exports = multer({storage}).single('image')
