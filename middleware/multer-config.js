@@ -7,7 +7,7 @@ const MIME_TYPES = {
   "images/jpeg": "jpeg",
 };
 //create the object of multer configuration
-
+/*
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     //indicate the folder where images will be saved, null - means without errors
@@ -25,5 +25,9 @@ const storage = multer.diskStorage({
     callback(null, name + Date.now() + "." + extension);
   },
 });
+*/
+
+const storage = multer.memoryStorage()
+
 
 module.exports = multer({storage}).single('image')
