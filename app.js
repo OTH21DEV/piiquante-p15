@@ -47,7 +47,7 @@ app.use(express.json());
 // app.use('/api/auth', userRoutes)
 app.use("/api/auth/", userRoutes);
 app.use("/api/sauces", sauceRoutes);
-app.use("/images", express.static(path.join(__dirname, "./images")));
+// app.use("/images", express.static(path.join(__dirname, "images")));
 
 /*TEST  */
 
@@ -71,7 +71,7 @@ app.get('/*', (req, res) => {
 
 app.use(express.static('./images'))
 app.get('/images', (req, res) => {
-  res.sendFile(path.join(__dirname, "./images"));
+  res.sendFile(path.join(__dirname, "images"));
 });
 //on export module app
 module.exports = app;
