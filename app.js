@@ -66,5 +66,12 @@ app.use(express.static('./build/'));
 app.get('/*', (req, res) => {
   res.sendFile('index.html', { root: 'build/' });
 });
+
+
+
+app.use(express.static('./images'))
+app.get('/images', (req, res) => {
+  res.sendFile(path.join(__dirname, "./images"));
+});
 //on export module app
 module.exports = app;
