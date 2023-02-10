@@ -1,11 +1,14 @@
 const multer = require("multer");
 
+
+
 //define the types of images
+/*
 const MIME_TYPES = {
   "images/jpg": "jpg",
   "images/png": "png",
   "images/jpeg": "jpeg",
-};
+};*/
 //create the object of multer configuration
 /*
 const storage = multer.diskStorage({
@@ -27,24 +30,36 @@ const storage = multer.diskStorage({
 });
 */
 
-const storage = new GridFsStorage({
-  url: 'mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority',
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err)
-        }
-        const filename = file.originalname
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads',
-        }
-        resolve(fileInfo)
-      })
-    })
+
+
+// module.exports = multer({storage}).single('image')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images/')
   },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + '-' + file.originalname)
+  }
 })
 
 
-module.exports = multer({storage}).single('image')
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true)
+  } else {
+    //reject file
+    cb({
+      message: 'Unsupported file format'
+    }, false)
+  }
+}
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024
+  },
+  fileFilter: fileFilter
+})
+
+module.exports = upload;
