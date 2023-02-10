@@ -51,6 +51,7 @@ exports.createSauce =  async(req, res, next) => {
     //   console.log(req.body)
     //   console.log(req.auth)
     const result = await cloudinary.uploader.upload(req.file.path) 
+    console.log(result)
   
     //creating new instance Sauce from the SAuce model
     //adding Object with info sent from frontend and save it in Mongo DB
