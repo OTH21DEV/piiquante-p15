@@ -62,7 +62,7 @@ exports.createSauce =  async(req, res, next) => {
       ...sauceObject,
       userId: req.auth.userId,
       // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-      imageUrl:result.secure_url
+      imageUrl:`${result.secure_url}`
     });
     await sauce
       .save()
