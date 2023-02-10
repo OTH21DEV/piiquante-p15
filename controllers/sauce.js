@@ -41,7 +41,7 @@ exports.createSauce = (req, res, next) => {
 
 //test
 
-exports.createSauce =  (req, res, next) => {
+exports.createSauce =  async(req, res, next) => {
   try{
     //need to parse req Object
     //frontend send req data as form-data .Body of req contains
@@ -50,7 +50,7 @@ exports.createSauce =  (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     //   console.log(req.body)
     //   console.log(req.auth)
-    const result = cloudinary.uploader.upload(req.file.path) 
+    const result = await cloudinary.uploader.upload(req.file.path) 
   
     //creating new instance Sauce from the SAuce model
     //adding Object with info sent from frontend and save it in Mongo DB
@@ -64,7 +64,7 @@ exports.createSauce =  (req, res, next) => {
       // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
       imageUrl:result.secure_url
     });
-     sauce
+    await sauce
       .save()
       .then(() => {
         res.status(201).json({ message: "post" });

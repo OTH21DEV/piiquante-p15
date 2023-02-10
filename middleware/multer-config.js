@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 // module.exports = multer({storage}).single('image')
 
 module.exports = multer({
-  storage: multer.diskStorage({}),
+  storage: multer.diskStorage({}).single('image'),
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
     if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
