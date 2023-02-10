@@ -58,6 +58,7 @@ exports.createSauce = async (req, res, next) => {
       ...sauceObject,
       userId: req.auth.userId,
       imageUrl: result.secure_url,
+      cloudinary_id:result.public_id
     });
     //Save sauce in Mongo Db Atlas
     await sauce.save().then(() => {
