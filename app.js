@@ -13,6 +13,11 @@ const mongoose = require("mongoose");
 
 
 
+const app = express();
+app.use(cors());
+//on rajoute un middleware pour eviter l'erreur CORS (requete HTTP - echange entre 2 serveurs)
+const dotenv = require('dotenv')
+dotenv.config()
 
 mongoose
   .connect("mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,9 +27,6 @@ mongoose
 
 //on crée l'app
 
-const app = express();
-app.use(cors());
-//on rajoute un middleware pour eviter l'erreur CORS (requete HTTP - echange entre 2 serveurs)
 
 app.use((req, res, next) => {
   //permet d'accéder à notre API depuis n'importe quelle origine
