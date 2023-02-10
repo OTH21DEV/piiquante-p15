@@ -7,8 +7,7 @@ const path = require("path");
 //on rajoute package mongoose pour MongoDB ATlas
 
 const mongoose = require("mongoose");
-// const stuffRoutes = require ('./routes/stuff')
-// const userRoutes = require('./routes/user')
+
 
 
 
@@ -20,13 +19,6 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-//on rajoute une methode pour definir la reponse de notre application :
-/*
-app.use((rez,res)=>{
-    //la reponse sous format json contenat un objet 
-    res.json({ message: 'votre requete a bien été recu!'})
-})
-*/
 
 //on crée l'app
 
@@ -48,8 +40,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 //on utilise les routes definies avec url initial
-// app.use('/api/stuff', stuffRoutes)
-// app.use('/api/auth', userRoutes)
+
 app.use("/api/auth/", userRoutes);
 app.use("/api/sauces", sauceRoutes);
 // app.use("/images", express.static(path.join(__dirname, "images")));
