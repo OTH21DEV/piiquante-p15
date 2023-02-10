@@ -2,6 +2,7 @@ const Sauce = require("../models/sauce");
 const { checkout } = require("../routes/sauce");
 const fs = require("fs");
 const cloudinary = require('../cloudinary')
+const upload = require('../middleware/multer-config')
 /*
 exports.createSauce = (req, res, next) => {
   //need to parse req Object
@@ -42,14 +43,14 @@ exports.createSauce = (req, res, next) => {
 
 exports.createSauce =  async(req, res, next) => {
   try{
-    const result = await cloudinary.uploader.upload(req.file.path) 
     //need to parse req Object
     //frontend send req data as form-data .Body of req contains
     //the String Sauce - which is Object Sauce converted on String
-  
+    
     const sauceObject = JSON.parse(req.body.sauce);
     //   console.log(req.body)
     //   console.log(req.auth)
+    const result = await cloudinary.uploader.upload(req.file.path) 
   
     //creating new instance Sauce from the SAuce model
     //adding Object with info sent from frontend and save it in Mongo DB
