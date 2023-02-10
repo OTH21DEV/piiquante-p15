@@ -1,19 +1,6 @@
 const mongoose = require("mongoose");
 const sauceSchema = mongoose.Schema({
-  
-//   userId: { type: String, required: true },
-//   name: { type: String, required: true },
-//   manufacturer: { type: String, required: true },
-//   description: { type: String, required: true },
-//   mainPepper: { type: String, required: true },
-//   imageUrl: { type: String, required: true },
-//   heat: { type: Number, required: true },
-//   // likes: { type: Number },
-//   // dislikes: { type: Number },
-//   // usersLiked: { type: [String] },
-//   // usersDisliked: { type: [String] }
-// // sauce:{type:String},
-// // image:{type:File}
+
 userId: { type: String, require: true }, // l'identifiant MongoDB unique de l'utilisateur qui a créé la sauce
 name: { type: String, require: true, minlength: 4, maxlength: 30 }, //nom de la sauce obligatoire
 manufacturer: { type: String, require: true, minlength: 4, maxlength: 30 }, // fabricant de la sauce obligatoire
