@@ -1,7 +1,8 @@
 const Sauce = require("../models/sauce");
 const { checkout } = require("../routes/sauce");
 const fs = require("fs");
-
+const cloudinary = require('../cloudinary')
+/*
 exports.createSauce = (req, res, next) => {
   //need to parse req Object
   //frontend send req data as form-data .Body of req contains
@@ -21,7 +22,7 @@ exports.createSauce = (req, res, next) => {
     ...sauceObject,
     userId: req.auth.userId,
     // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    imageUrl:`${req.file.image.buffer}`
+    imageUrl:`${req.file.path}`
   });
   console.log(imageUrl)
   sauce
@@ -33,6 +34,51 @@ exports.createSauce = (req, res, next) => {
       res.status(400).json({ error });
     });
 };
+*/
+
+
+
+//test
+
+exports.createSauce =  (req, res, next) => {
+  try{
+    const result = cloudinary.uploader.upload(req.file.path) 
+    //need to parse req Object
+    //frontend send req data as form-data .Body of req contains
+    //the String Sauce - which is Object Sauce converted on String
+  
+    const sauceObject = JSON.parse(req.body.sauce);
+    //   console.log(req.body)
+    //   console.log(req.auth)
+  
+    //creating new instance Sauce from the SAuce model
+    //adding Object with info sent from frontend and save it in Mongo DB
+  
+    delete sauceObject._id;
+    delete sauceObject.userId;
+  
+    const sauce = new Sauce({
+      ...sauceObject,
+      userId: req.auth.userId,
+      // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      imageUrl:result.secure_url
+    });
+    sauce
+      .save()
+      .then(() => {
+        res.status(201).json({ message: "post" });
+      })
+    }
+    catch(error) {
+      res.status(400).json({ error });
+    };
+  
+};
+
+
+
+
+
 
 // we create an Object sauceObject which will check
 // if req.file existe , if yes, we take new image,
