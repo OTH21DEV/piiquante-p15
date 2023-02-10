@@ -1,6 +1,18 @@
 const multer = require("multer");
 const path = require("path");
 
+module.exports = multer({
+  storage: multer.diskStorage({}),
+  fileFilter: (req, file, cb) => {
+    let ext = path.extname(file.originalname);
+    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+      cb(new Error("File type is not supported"), false);
+      return;
+    }
+    cb(null, true);
+  },
+});
+
 //define the types of images
 /*
 const MIME_TYPES = {
@@ -8,7 +20,7 @@ const MIME_TYPES = {
   "images/png": "png",
   "images/jpeg": "jpeg",
 };*/
-//create the object of multer configuration
+//create the object of multer configuration if the images stored locally
 /*
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -30,15 +42,3 @@ const storage = multer.diskStorage({
 */
 
 // module.exports = multer({storage}).single('image')
-
-module.exports = multer({
-  storage: multer.diskStorage({}),
-  fileFilter: (req, file, cb) => {
-    let ext = path.extname(file.originalname);
-    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
-      cb(new Error("File type is not supported"), false);
-      return;
-    }
-    cb(null, true);
-  },
-});

@@ -1,8 +1,8 @@
 const Sauce = require("../models/sauce");
 const { checkout } = require("../routes/sauce");
 const fs = require("fs");
-const cloudinary = require('../cloudinary')
-const upload = require('../middleware/multer-config')
+const cloudinary = require("../cloudinary");
+const upload = require("../middleware/multer-config");
 /*
 exports.createSauce = (req, res, next) => {
   //need to parse req Object
@@ -22,8 +22,8 @@ exports.createSauce = (req, res, next) => {
   const sauce = new Sauce({
     ...sauceObject,
     userId: req.auth.userId,
-    // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-    imageUrl:`${req.file.path}`
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+   
   });
   console.log(imageUrl)
   sauce
@@ -37,50 +37,36 @@ exports.createSauce = (req, res, next) => {
 };
 */
 
-
-
 //test
 
-exports.createSauce =  async(req, res, next) => {
-  try{
+exports.createSauce = async (req, res, next) => {
+  try {
     //need to parse req Object
     //frontend send req data as form-data .Body of req contains
     //the String Sauce - which is Object Sauce converted on String
-    
+
     const sauceObject = JSON.parse(req.body.sauce);
-    //   console.log(req.body)
-    //   console.log(req.auth)
-    const result = await cloudinary.uploader.upload(req.file.path) 
-    console.log(result)
-  
-    //creating new instance Sauce from the SAuce model
-    //adding Object with info sent from frontend and save it in Mongo DB
-  
+
+    const result = await cloudinary.uploader.upload(req.file.path);
+
     delete sauceObject._id;
     delete sauceObject.userId;
-  
+
+    //create instance of Sauce from Sauce model
+    //adding Object with info sent from frontend and save it in Mongo DB
     const sauce = new Sauce({
       ...sauceObject,
       userId: req.auth.userId,
-      // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-      imageUrl:result.secure_url
+      imageUrl: result.secure_url,
     });
-    await sauce
-      .save()
-      .then(() => {
-        res.status(201).json({ message: "post" });
-      })
-    }
-    catch(error) {
-      res.status(400).json({ error });
-    };
-  
+    //Save sauce in Mongo Db Atlas
+    await sauce.save().then(() => {
+      res.status(201).json({ message: "post" });
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };
-
-
-
-
-
 
 // we create an Object sauceObject which will check
 // if req.file existe , if yes, we take new image,
@@ -94,7 +80,7 @@ exports.modifySauce = (req, res, next) => {
     ? {
         ...JSON.parse(req.body),
         // imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-        imageUrl:req.file.image.buffer,
+        imageUrl: req.file.image.buffer,
       }
     : {
         ...req.body,
