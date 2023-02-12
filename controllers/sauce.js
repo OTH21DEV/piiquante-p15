@@ -75,7 +75,7 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   try {
-    let sauce = await Sauce.findById(req.params.id);
+    let sauce = await Sauce.findOne({ _id: req.params.id });
     if (sauce.userId != req.auth.userId) {
       res.status(401).json({ message: "Not authorized" });
     } else {
