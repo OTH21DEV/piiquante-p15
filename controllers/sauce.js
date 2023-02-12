@@ -58,7 +58,7 @@ exports.createSauce = async (req, res, next) => {
       ...sauceObject,
       userId: req.auth.userId,
       imageUrl: result.secure_url,
-      cloudinary_id:result.public_id
+      cloudinary_id: result.public_id,
     });
     //Save sauce in Mongo Db Atlas
     await sauce.save().then(() => {
@@ -156,17 +156,16 @@ exports.deleteSauce = (req, res, next) => {
       if (sauce.userId != req.auth.userId) {
         res.status(401).json({ message: "Not authorized" });
       } else {
-        //we tale the name of file
+        //Deelete image from cloudinary
+        cloudinary.uploader.destroy(sauce.cloudinary_id);
         const filename = sauce.imageUrl.split("/images")[1];
-        //we use fonction .unlink of fs package for delet the file
-        //by providing in arguments the file name to delete and callback to exicute
-        //once the file is deleted
-        fs.unlink(`images/${filename}`, () => {
-          //we delete the Sauce from the Mongo DB
-          Sauce.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: "Sauce deleted" }))
-            .catch((error) => res.status(401).json(error));
-        });
+
+        // fs.unlink(`images/${filename}`, () => {
+        //we delete the Sauce from the Mongo DB
+        Sauce.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: "Sauce deleted" }))
+          .catch((error) => res.status(401).json(error));
+        // });
       }
     })
     .catch((error) => res.status(500).json(error));
@@ -188,3 +187,31 @@ exports.getAllSauces = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ error }));
 };
+
+/**
+ * exports.deleteSauce = (req, res, next) => {
+  //we use ID received in params for access the Sauce in the
+  // Mongo DB
+  Sauce.findOne({ _id: req.params.id })
+    //check if the user is a owner of the Sauce object
+    //sauce is a entire Object
+    .then((sauce) => {
+      if (sauce.userId != req.auth.userId) {
+        res.status(401).json({ message: "Not authorized" });
+      } else {
+        //we tale the name of file
+        const filename = sauce.imageUrl.split("/images")[1];
+        //we use fonction .unlink of fs package for delet the file
+        //by providing in arguments the file name to delete and callback to exicute
+        //once the file is deleted
+        fs.unlink(`images/${filename}`, () => {
+          //we delete the Sauce from the Mongo DB
+          Sauce.deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: "Sauce deleted" }))
+            .catch((error) => res.status(401).json(error));
+        });
+      }
+    })
+    .catch((error) => res.status(500).json(error));
+};
+ */
