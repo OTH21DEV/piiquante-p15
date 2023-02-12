@@ -74,11 +74,11 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  delete sauceObject._userID;
+
 
   // we check if the user is owner of the sauce Object
   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-    console.log(sauce);
+
     if (sauce.userId != req.auth.userId) {
       res.status(401).json({ message: "Not authorized" });
     } else {
@@ -94,7 +94,7 @@ exports.modifySauce = async (req, res, next) => {
           : {
               ...req.body,
             };
-
+            delete sauceObject._userID;
         Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
           .then(() => {
             res.status(200).json({ message: "Sauce modified" });
