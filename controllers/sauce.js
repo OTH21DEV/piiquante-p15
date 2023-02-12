@@ -77,7 +77,7 @@ exports.modifySauce = (req, res, next) => {
   console.log(req.params.id);
   console.log(req);
   // console.log(req.auth.userId)
-  cloudinary.uploader.destroy(sauce.cloudinary_id);
+
   const result = cloudinary.uploader.upload(req.file.path);
   const sauceObject = req.file
     ? {
@@ -97,6 +97,7 @@ exports.modifySauce = (req, res, next) => {
     if (sauce.userId != req.auth.userId) {
       res.status(401).json({ message: "Not authorized" });
     } else {
+      cloudinary.uploader.destroy(sauce.cloudinary_id);
       Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
         .then(() => {
           res.status(200).json({ message: "Sauce modified" });
