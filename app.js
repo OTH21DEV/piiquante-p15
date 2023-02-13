@@ -46,7 +46,7 @@ app.use("/api/sauces", sauceRoutes);
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
 //images are stored in cloudinary 
-app.use('/images', sauceRoutes)
+//app.use('/images', sauceRoutes)
 
 
 /*TEST  */
