@@ -73,22 +73,22 @@ exports.createSauce = async (req, res, next) => {
 // if req.file existe , if yes, we take new image,
 // otherwise we take entering Object
 
-exports.modifySauce = async (req, res, next) => {
+exports.modifySauce =(req, res, next) => {
 
 try {
-  let sauce = await Sauce.findById(req.params.id);
+  let sauce = Sauce.findById(req.params.id);
   if (sauce.userId != req.auth.userId) {
     res.status(401).json({ message: "Not authorized" });
   } else {
- await cloudinary.uploader.destroy(sauce.cloudinary_id);
-  const result = await cloudinary.uploader.upload(req.file.path);
+ cloudinary.uploader.destroy(sauce.cloudinary_id);
+  const result = cloudinary.uploader.upload(req.file.path);
   const sauceObject = {
     ...JSON.parse(req.body),
 
     imageUrl: result.secure_url,
     cloudinary_id: result.public_id,
   };
-  sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+  sauce = Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
   res.status(200).json({ message: "Sauce modified" });
 }} catch (error) {
   res.status(401).json({ error });
