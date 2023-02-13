@@ -75,8 +75,9 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   const sauceObject = {};
+  let sauce = await Sauce.findById(req.params.id);
   if (req.file) {
-    await cloudinary.uploader.destroy(user.cloudinary_id);
+    await cloudinary.uploader.destroy(sauce.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
 
     sauceObject = {
