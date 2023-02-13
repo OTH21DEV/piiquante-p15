@@ -95,13 +95,13 @@ exports.modifySauce = async (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
 
     if (sauce.userId != req.auth.userId) {
-      res.status(401).json({ message: "Not authorized" });
+      res.status(404).json({ message: "Not authorized" });
     } else {
       Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
         .then(() => {
           res.status(200).json({ message: "Sauce modified" });
         })
-        .catch((error) => res.status(401).json({ error }));
+        .catch((error) => res.status(405).json({ error }));
     }
   });
 };
