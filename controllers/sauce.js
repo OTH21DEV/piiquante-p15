@@ -90,7 +90,7 @@ exports.modifySauce = async (req, res, next) => {
     delete sauceObject._userID;
 
     sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
-  res.send(sauce);
+    res.status(200).json({ message: "Sauce modified" });
     // we check if the user is owner of the sauce Object
    // next() ;
   }
@@ -200,7 +200,7 @@ exports.getOneSauce = async (req, res, next) => {
       res.status(200).json(sauce);
     })
     .catch((error) => res.status(404).json(error));
- // next();
+ next();
 };
 
 exports.getAllSauces = (req, res, next) => {
