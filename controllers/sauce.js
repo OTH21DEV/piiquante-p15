@@ -74,42 +74,26 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  try{
+  try {
+    let sauce = await Sauce.findById(req.params.id);
+    await cloudinary.uploader.destroy(sauce.cloudinary_id);
+    const result = await cloudinary.uploader.upload(req.file.path);
 
-  
-  let sauce = await Sauce.findById( req.params.id );
-await cloudinary.uploader.destroy(sauce.cloudinary_id);
- const result = await cloudinary.uploader.upload(req.file.path);
-
-  const sauceObject = req.file
-  ? {
+    const sauceObject = {
       ...JSON.parse(req.body),
       imageUrl: result.secure_url || sauce.imageUrl,
-    cloudinary_id: result.public_id || sauce.cloudinary_id,
-    }
-  : {
-      ...req.body,
+      cloudinary_id: result.public_id || sauce.cloudinary_id,
     };
-delete sauceObject._userID;
 
-// we check if the user is owner of the sauce Object
-Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-  console.log(sauce);
-  if (sauce.userId != req.auth.userId) {
-    res.status(401).json({ message: "Not authorized" });
-  } else {
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-      .then(() => {
-        res.status(200).json({ message: "Sauce modified" });
-      })
-      .catch((error) => res.status(401).json({ error }));
-  }
-})
-  }
-  catch (error) {
+    delete sauceObject._userID;
+
+    sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+    res.json(sauce);
+    // we check if the user is owner of the sauce Object
+  } catch (error) {
     res.status(400).json({ error });
   }
-}
+};
 
 // try {
 //   let sauce = await Sauce.findOne({ _id: req.params.id });
@@ -163,8 +147,6 @@ Sauce.findOne({ _id: req.params.id }).then((sauce) => {
 //     }
 //   });
 // };
-
-
 
 //V tuto
 // try {
