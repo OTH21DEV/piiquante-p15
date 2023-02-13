@@ -74,10 +74,10 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  let sauce = await Sauce.findOne({ _id: req.params.id });
+  let sauce = await Sauce.findById( req.params.id );
 await cloudinary.uploader.destroy(sauce.cloudinary_id);
- const result = await cloudinary.uploader.upload(req.file);
- console.log(req.file)
+ const result = await cloudinary.uploader.upload(req.file.path);
+
   const sauceObject = req.file
   ? {
       ...JSON.parse(req.body),
