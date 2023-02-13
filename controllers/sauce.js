@@ -92,7 +92,9 @@ exports.modifySauce = async (req, res, next) => {
     sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
   res.send(sauce);
     // we check if the user is owner of the sauce Object
-  } catch (error) {
+    next() ;
+  }
+  catch (error) {
   res.status(400).json({ error });
   }
 };
