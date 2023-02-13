@@ -104,8 +104,8 @@ exports.modifySauce = async (req, res, next) => {
     sauceObject = {
       ...JSON.parse(req.body),
 
-      imageUrl: result.secure_url,
-      cloudinary_id: result.public_id,
+      imageUrl: result.secure_url || sauce.imageUrl,
+      cloudinary_id: result.public_id || sauce.cloudinary_id,
     };
   } else {
     sauceObject = {
