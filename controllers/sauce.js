@@ -75,58 +75,58 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
 
-try {
-  let sauce = await Sauce.findOne({ _id: req.params.id });
-  if (sauce.userId != req.auth.userId) {
-    res.status(401).json({ message: "Not authorized" });
-  } else {
- await cloudinary.uploader.destroy(sauce.cloudinary_id);
-  const result = await cloudinary.uploader.upload(req.file.path);
-  const sauceObject = {
-    ...JSON.parse(req.body),
-
-    imageUrl: result.secure_url,
-    cloudinary_id: result.public_id,
-  };
-  sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
-  res.status(200).json({ message: "Sauce modified" });
-}} catch (error) {
-  res.status(401).json({ error });
-}
-
-}////////////////////
-//   const sauceObject = {};
-//   let sauce = await Sauce.findById(req.params.id);
-//   if (req.file) {
-//     await cloudinary.uploader.destroy(sauce.cloudinary_id);
-//     const result = await cloudinary.uploader.upload(req.file.path);
-
-//     sauceObject = {
-//       ...JSON.parse(req.body),
-
-//       imageUrl: result.secure_url,
-//       cloudinary_id: result.public_id,
-//     };
+// try {
+//   let sauce = await Sauce.findOne({ _id: req.params.id });
+//   if (sauce.userId != req.auth.userId) {
+//     res.status(401).json({ message: "Not authorized" });
 //   } else {
-//     sauceObject = {
-//       ...req.body,
-//     };
-//   }
-//   delete sauceObject._userID;
+//  await cloudinary.uploader.destroy(sauce.cloudinary_id);
+//   const result = await cloudinary.uploader.upload(req.file.path);
+//   const sauceObject = {
+//     ...JSON.parse(req.body),
 
-//   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+//     imageUrl: result.secure_url,
+//     cloudinary_id: result.public_id,
+//   };
+//   sauce = await Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+//   res.status(200).json({ message: "Sauce modified" });
+// }} catch (error) {
+//   res.status(401).json({ error });
+// }
 
-//     if (sauce.userId != req.auth.userId) {
-//       res.status(404).json({ message: "Not authorized" });
-//     } else {
-//       Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-//         .then(() => {
-//           res.status(200).json({ message: "Sauce modified" });
-//         })
-//         .catch((error) => res.status(405).json({ error }));
-//     }
-//   });
-// };
+// }////////////////////
+  const sauceObject = {};
+  let sauce = await Sauce.findById(req.params.id);
+  if (req.file) {
+    await cloudinary.uploader.destroy(sauce.cloudinary_id);
+    const result = await cloudinary.uploader.upload(req.file.path);
+
+    sauceObject = {
+      ...JSON.parse(req.body),
+
+      imageUrl: result.secure_url,
+      cloudinary_id: result.public_id,
+    };
+  } else {
+    sauceObject = {
+      ...req.body,
+    };
+  }
+  delete sauceObject._userID;
+
+  Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+
+    if (sauce.userId != req.auth.userId) {
+      res.status(404).json({ message: "Not authorized" });
+    } else {
+      Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+        .then(() => {
+          res.status(200).json({ message: "Sauce modified" });
+        })
+        .catch((error) => res.status(405).json({ error }));
+    }
+  });
+};
 
 
 
