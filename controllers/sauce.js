@@ -75,11 +75,11 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   // we check if the user is owner of the sauce Object
-  Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+  Sauce.findOne({ _id: req.params.id })
     const sauceObject = {};
-    if (sauce.userId != req.auth.userId) {
-      res.status(401).json({ message: "Not authorized" });
-    } else {
+    // if (sauce.userId != req.auth.userId) {
+    //   res.status(401).json({ message: "Not authorized" });
+    // } else {
       if (req.file) {
         cloudinary.uploader.destroy(user.cloudinary_id);
         const result = cloudinary.uploader.upload(req.file.path);
@@ -104,7 +104,7 @@ exports.modifySauce = async (req, res, next) => {
         })
         .catch((error) => res.status(401).json({ error }));
     }
-  });
+  // });
   //V tuto
   // try {
   //   let sauce = await Sauce.findById(req.params.id);
@@ -124,7 +124,7 @@ exports.modifySauce = async (req, res, next) => {
   // }} catch (error) {
   //   res.status(401).json({ error });
   // }
-};
+// };
 
 // console.log(req.params.id);
 // console.log(req);
