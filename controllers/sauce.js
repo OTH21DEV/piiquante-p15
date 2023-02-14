@@ -73,13 +73,13 @@ exports.createSauce = async (req, res, next) => {
 // if req.file existe , if yes, we take new image,
 // otherwise we take entering Object
 
-exports.modifySauce = async (req, res, next) => {
+exports.modifySauce = (req, res, next) => {
   //v tuto 
   
 
-    let sauce = await Sauce.findById(req.params.id);
+    let sauce = Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = cloudinary.uploader.upload(req.file.image.path);
 
     const sauceObject = {
       ...JSON.parse(req.body),
