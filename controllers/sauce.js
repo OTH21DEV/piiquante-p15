@@ -90,9 +90,9 @@ exports.modifySauce = async (req, res, next) => {
     delete sauceObject._userID;
 
     sauce = await Sauce.findOneAndUpdate({ _id: req.params.id }, { ...sauceObject, _id: req.params.id });
-    return res.status(200).json({ message: "Sauce modified" });
-    // we check if the user is owner of the sauce Object
-   // next() ;
+    then(() => {
+      res.status(200).json({ message: "Sauce modified" });
+    })
   }
   catch (error) {
   res.status(400).json({ error });
