@@ -75,7 +75,7 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   //v tuto 
-  /*
+  
   try {
     let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
@@ -98,9 +98,9 @@ exports.modifySauce = async (req, res, next) => {
   res.status(400).json({ error });
   }
 };
-*/
 
 
+/*
 let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -130,7 +130,7 @@ if (sauce.userId != req.auth.userId) {
 }
 });
 }
-
+*/
 //////////////////////////////////
 exports.sauceNotation = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
