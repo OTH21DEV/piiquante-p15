@@ -76,11 +76,14 @@ exports.createSauce = async (req, res, next) => {
 exports.modifySauce = async (req, res, next) => {
   //v tuto 
   
-  const sauceObject = JSON.parse(req.body.sauce);
+try{
+
+
     let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
-sauceObject = {
+
+    const sauceObject = {
       ...JSON.parse(req.body),
       imageUrl: result.secure_url || sauce.imageUrl,
       cloudinary_id: result.public_id || sauce.cloudinary_id,
@@ -98,7 +101,11 @@ sauceObject = {
           })
         //  .catch((error) => res.status(401).json({ error }));
       }
-    });
+    })
+  }
+  catch (error) {
+    res.status(400).json({ error });
+  }
 }
 /*
 let sauce = await Sauce.findById(req.params.id);
