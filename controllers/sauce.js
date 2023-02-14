@@ -79,7 +79,7 @@ exports.modifySauce = (req, res, next) => {
 
     let sauce = Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
-    const result = cloudinary.uploader.upload(req.file.image.path);
+    const result = cloudinary.uploader.upload(req.file.path);
 
     const sauceObject = {
       ...JSON.parse(req.body),
