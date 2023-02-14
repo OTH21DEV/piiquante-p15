@@ -76,7 +76,7 @@ exports.createSauce = async (req, res, next) => {
 exports.modifySauce = async (req, res, next) => {
   //v tuto 
   
-  try {
+
     let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -88,18 +88,19 @@ exports.modifySauce = async (req, res, next) => {
     };
 
     delete sauceObject._userID;
-
-    sauce = await Sauce.findOneAndUpdate({ _id: req.params.id }, { ...sauceObject, _id: req.params.id });
-    then(() => {
-      res.status(200).json({ message: "Sauce modified" });
-    })
-  }
-  catch (error) {
-  res.status(400).json({ error });
-  }
-};
-
-
+    Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+      console.log(sauce);
+      if (sauce.userId != req.auth.userId) {
+        res.status(401).json({ message: "Not authorized" });
+      } else {
+        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+          .then(() => {
+            res.status(200).json({ message: "Sauce modified" });
+          })
+          .catch((error) => res.status(401).json({ error }));
+      }
+    });
+}
 /*
 let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
