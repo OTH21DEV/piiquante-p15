@@ -199,7 +199,7 @@ exports.getOneSauce = async (req, res, next) => {
       res.status(200).json(sauce);
     })
     .catch((error) => res.status(404).json(error));
-  next();
+  //next();
 };
 
 exports.getAllSauces = (req, res, next) => {
