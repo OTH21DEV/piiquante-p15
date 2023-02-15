@@ -77,6 +77,7 @@ exports.modifySauce = async (req, res, next) => {
   console.log('test')
   try {
     let sauce = await Sauce.findById(req.params.id);
+    console.log(sauce)
     console.log('test2')
   
 
