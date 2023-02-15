@@ -74,11 +74,12 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
+  console.log('test')
   try {
     let sauce = await Sauce.findById(req.params.id);
     // await cloudinary.uploader.destroy(sauce.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
-
+console.log(result)
     const sauceObject = {
       ...JSON.parse(req.body),
       imageUrl: result.secure_url || sauce.imageUrl,
@@ -98,7 +99,7 @@ exports.modifySauce = async (req, res, next) => {
       }
     });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(402).json({ error });
   }
 };
 
