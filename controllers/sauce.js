@@ -81,10 +81,10 @@ exports.modifySauce = async (req, res, next) => {
   
     console.log(req.body)
     console.log(req.url.replace("/",''))
-    
+    let filePath= req.url.replace("/",'')
     await cloudinary.uploader.destroy(sauce.cloudinary_id);
     console.log('test3')
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(filePath);
     console.log('test4')
 console.log(result)
     const sauceObject = {
