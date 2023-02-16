@@ -74,23 +74,23 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  console.log('test')
+ 
   try {
     let sauce = await Sauce.findById(req.params.id);
-    console.log(sauce)
-    console.log('test2')
+   
+   
   
 
-    console.log(req)
+    
    // console.log(req.url.replace("/",''))
    
     await cloudinary.uploader.destroy(sauce.cloudinary_id);
     console.log('test3')
     console.log(req.file)
-    console.log(req.files)
+ 
     const result = await cloudinary.uploader.upload(req.files);
     console.log('test4')
-console.log(result)
+
     const sauceObject = {
       ...JSON.parse(req.body),
       imageUrl: result.secure_url || sauce.imageUrl,
