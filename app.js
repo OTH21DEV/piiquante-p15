@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 //Pour gérer la requête POST venant de l'application front-end, on a besoin d'en extraire le corps JSON.
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }))
 //on utilise les routes definies avec url initial
 
 app.use("/api/auth/", userRoutes);
