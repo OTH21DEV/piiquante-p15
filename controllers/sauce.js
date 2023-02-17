@@ -88,7 +88,7 @@ exports.modifySauce = async (req, res, next) => {
     console.log('test3')
     console.log(req.file)
  
-    const result = await cloudinary.uploader.upload(req.files);
+    const result = await cloudinary.uploader.upload(req.file);
     console.log('test4')
 
     const sauceObject = {

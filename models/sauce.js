@@ -7,7 +7,7 @@ manufacturer: { type: String, require: true, minlength: 4, maxlength: 30 }, // f
 description: { type: String, require: true, minlength: 4, maxlength: 100 }, // description de la sauce obligatoire
 mainPepper: { type: String, require: true, minlength: 3, maxlength: 20 }, // le principal ingrédient épicé de la sauce obligatoire
 cloudinary_id:{ type: String },
-imageUrl: { type: String, require: true }, // l'URL de l'image de la sauce téléchargée par l'utilisateur obligatoire
+imageUrl: { type: String}, // l'URL de l'image de la sauce téléchargée par l'utilisateur obligatoire
 heat: { type: Number, require: true }, // // nombre entre 1 et 10 décrivant la sauce obligatoire
 //Like et dislike
 likes: { type: Number, default: 0 }, // nombre d'utilisateurs qui aiment (= likent) la sauce, à l'ajout il n'y en a pas donc 0 par défaut
