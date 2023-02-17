@@ -47,7 +47,7 @@ exports.createSauce = async (req, res, next) => {
 
     const sauceObject = JSON.parse(req.body.sauce);
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.v2.uploader.upload(req.file.path);
 
     delete sauceObject._id;
     delete sauceObject.userId;
@@ -88,7 +88,7 @@ exports.modifySauce = async (req, res, next) => {
     console.log('test3')
     console.log(req.file)
  
-    const result = await cloudinary.uploader.upload(req.file);
+    const result = await cloudinary.v2.uploader.upload(req.file.path);
     console.log('test4')
 if (req.file){
 
