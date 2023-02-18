@@ -80,26 +80,42 @@ exports.modifySauce = async (req, res, next) => {
     let result;
 
     let sauceObject;
+    // if (req.file) {
+    //   await cloudinary.uploader.destroy(sauce.cloudinary_id);
+    //   result = await cloudinary.uploader.upload(req.file.path);
+    //   sauceObject = {
+    //     //  ...JSON.parse(req.body),
+
+    //     ...req.body,
+    //     imageUrl: result.secure_url,
+    //     cloudinary_id: result.public_id,
+    //   };
+    // } else {
+    //   sauceObject = {
+    //     //  ...JSON.parse(req.body),
+
+    //     ...req.body,
+    //     imageUrl: sauce.secure_url,
+    //     cloudinary_id: sauce.public_id,
+    //   };
+    // }
+
+
+    //test
+
     if (req.file) {
-      await cloudinary.uploader.destroy(sauce.cloudinary_id);
-      result = await cloudinary.uploader.upload(req.file.path);
+        await cloudinary.uploader.destroy(sauce.cloudinary_id);
+        result = await cloudinary.uploader.upload(req.file.path);
+       
+      }
       sauceObject = {
         //  ...JSON.parse(req.body),
 
         ...req.body,
-        imageUrl: result.secure_url,
-        cloudinary_id: result.public_id,
+        imageUrl: result.secure_url || sauce.secure_url,
+        cloudinary_id: result.public_id || sauce.public_id,
       };
-    } else if (!req.file){
-      sauceObject = {
-        //  ...JSON.parse(req.body),
-
-        ...req.body,
-        imageUrl: sauce.secure_url,
-        cloudinary_id: sauce.public_id,
-      };
-    }
-
+      
     delete sauceObject._userID;
 
     Sauce.findOne({ _id: req.params.id }).then((sauce) => {
