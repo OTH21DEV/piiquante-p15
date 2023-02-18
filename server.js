@@ -51,9 +51,9 @@ const normalizePort = val => {
   return false;
 };
 //Local dev
-//const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 //Heroku
-const port = normalizePort(process.env.PORT || 'mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority');
+//const port = normalizePort(process.env.PORT || 'mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority');
 app.set('port', port);
 
 // recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur

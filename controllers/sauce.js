@@ -100,8 +100,19 @@ exports.modifySauce = async (req, res, next) => {
       };
     }
 
+    // //test
+    // if (req.file) {
+    //   await cloudinary.uploader.destroy(sauce.cloudinary_id);
 
-    //test
+    //   result = await cloudinary.uploader.upload(req.file.path);
+    // }
+    // sauceObject = {
+    //   //  ...JSON.parse(req.body),
+
+    //   ...req.body,
+    //   imageUrl: result.secure_url || sauce.secure_url,
+    //   cloudinary_id: result.public_id || sauce.public_id,
+    // };
 
     delete sauceObject._userID;
 
@@ -113,10 +124,11 @@ exports.modifySauce = async (req, res, next) => {
         Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }).then(() => {
           res.status(200).json({ message: "Sauce modified" });
         });
-        //  .catch((error) => res.status(401).json({ error }));
 
-        //  sauce = Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
-        //   res.json(sauce);
+        /*
+        sauce =  Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+        res.json(sauce);
+        */
       }
     });
   } catch (error) {
