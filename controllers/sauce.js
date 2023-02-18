@@ -116,8 +116,8 @@ exports.modifySauce = async (req, res, next) => {
 
     delete sauceObject._userID;
 
-    Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-      console.log(sauce);
+    // Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+    //   console.log(sauce);
       if (sauce.userId != req.auth.userId) {
         res.status(401).json({ message: "Not authorized" });
       } else {
@@ -130,7 +130,7 @@ exports.modifySauce = async (req, res, next) => {
         res.json(sauce);
         */
       }
-    });
+    //});
   } catch (error) {
     res.status(402).json({ error });
   }
