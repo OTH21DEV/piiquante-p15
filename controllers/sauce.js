@@ -74,35 +74,34 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  let sauceObject={}
   try {
     let sauce = await Sauce.findById(req.params.id);
-   
-   
-  
 
-    
-   // console.log(req.url.replace("/",''))
-   
-    await cloudinary.uploader.destroy(sauce.cloudinary_id);
-    console.log('test3')
-    console.log(req.image)
-    // console.log(req.file)
- 
-    const result = await cloudinary.uploader.upload(req.file.path);
-    console.log('test4')
-if (req.file){
+    let result;
 
-  sauceObject = {
-      ...JSON.parse(req.body),
-      imageUrl: result.secure_url || sauce.imageUrl,
-      cloudinary_id: result.public_id || sauce.cloudinary_id,
-    };
-}else{
-sauceObject = req.body
-}
-console.log(sauceObject)
+    let sauceObject;
+    if (req.file) {
+      await cloudinary.uploader.destroy(sauce.cloudinary_id);
+      result = await cloudinary.uploader.upload(req.file.path);
+      sauceObject = {
+        //  ...JSON.parse(req.body),
+
+        ...req.body,
+        imageUrl: result.secure_url,
+        cloudinary_id: result.public_id,
+      };
+    } else {
+      sauceObject = {
+        //  ...JSON.parse(req.body),
+
+        ...req.body,
+        imageUrl: sauce.secure_url,
+        cloudinary_id: sauce.public_id,
+      };
+    }
+
     delete sauceObject._userID;
+
     Sauce.findOne({ _id: req.params.id }).then((sauce) => {
       console.log(sauce);
       if (sauce.userId != req.auth.userId) {
@@ -112,13 +111,15 @@ console.log(sauceObject)
           res.status(200).json({ message: "Sauce modified" });
         });
         //  .catch((error) => res.status(401).json({ error }));
+
+        //  sauce = Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+        //   res.json(sauce);
       }
     });
   } catch (error) {
     res.status(402).json({ error });
   }
 };
-
 
 //V TUTO
 /*

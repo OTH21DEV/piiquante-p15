@@ -50,7 +50,9 @@ const normalizePort = val => {
   }
   return false;
 };
-// const port = normalizePort(process.env.PORT || '3000');
+//Local dev
+//const port = normalizePort(process.env.PORT || '3000');
+//Heroku
 const port = normalizePort(process.env.PORT || 'mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority');
 app.set('port', port);
 

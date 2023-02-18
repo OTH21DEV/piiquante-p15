@@ -1,9 +1,10 @@
 const express = require("express");
+const bodyParser = require('body-parser')
 let cors = require("cors");
 //  pour accéder au path de notre serveur :
 const userRoutes = require("./routes/user");
 const sauceRoutes = require("./routes/sauce");
-const path = require("path");
+
 //on rajoute package mongoose pour MongoDB ATlas
 
 const mongoose = require("mongoose");
@@ -38,7 +39,13 @@ app.use((req, res, next) => {
 
 //Pour gérer la requête POST venant de l'application front-end, on a besoin d'en extraire le corps JSON.
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+// app.use(express.urlencoded({ extended: false }))
+
+
+
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 //on utilise les routes definies avec url initial
 
 app.use("/api/auth/", userRoutes);
@@ -51,23 +58,29 @@ app.use("/api/sauces", sauceRoutes);
 
 /*TEST  */
 
-// app.use(express.static(path.join(__dirname + "/../build")));
+ app.use(express.static(path.join(__dirname + "/../build")));
 //add path to index.html for Heroku server:
-/*
+
 app.get("*", (req, res, next) => {
   //add path to index.html for Heroku server:
   res.sendFile(path.join(__dirname, "/../build/index.html"));
 });
 
-*/
 
+
+////////////////////////BUILD FOR HEROKU
+
+/*
 app.use(express.static('./build/'));
 
 app.get('/*', (req, res) => {
   res.sendFile('index.html', { root: 'build/' });
 });
+*/
 
 
+
+////////////////////////////////////////////////////////
 /*
 app.use(express.static('./images'))
 app.get('/images', (req, res) => {
