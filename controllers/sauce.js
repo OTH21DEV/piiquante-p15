@@ -74,40 +74,14 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  // try {
-  //   let sauce = await Sauce.findById(req.params.id);
-
-  //   let result;
-
-  //   let sauceObject;
-  //   if (req.file) {
-  //     console.log('test 2')
-  //     await cloudinary.uploader.destroy(sauce.cloudinary_id);
-  //     result = await cloudinary.uploader.upload(req.file.path);
-  //     sauceObject = {
-  //       //  ...JSON.parse(req.body),
-
-  //       ...req.body,
-  //       imageUrl: result.secure_url,
-  //       cloudinary_id: result.public_id,
-  //     };
-  //   } else {
-  //     console.log('test')
-  //     sauceObject = {
-  //       //  ...JSON.parse(req.body),
-
-  //       ...req.body,
-  //       imageUrl: sauce.secure_url,
-  //       cloudinary_id: sauce.public_id,
-  //     };
-  //   }
-
+  console.log(req.file)
   try {
     let sauce = await Sauce.findById(req.params.id);
 
     let result;
-    let sauceObject= JSON.parse(req.body.sauce);
 
+    let sauceObject;
+    if (req.file) {
       console.log('test 2')
       await cloudinary.uploader.destroy(sauce.cloudinary_id);
       result = await cloudinary.uploader.upload(req.file.path);
@@ -115,9 +89,19 @@ exports.modifySauce = async (req, res, next) => {
         //  ...JSON.parse(req.body),
 
         ...req.body,
-        imageUrl: result.secure_url || sauce.secure_url,
-        cloudinary_id: result.public_id || sauce.public_id,
+        imageUrl: result.secure_url,
+        cloudinary_id: result.public_id,
       };
+    } else {
+      console.log('test')
+      sauceObject = {
+        //  ...JSON.parse(req.body),
+
+        ...req.body,
+        imageUrl: sauce.secure_url,
+        cloudinary_id: sauce.public_id,
+      };
+    }
 
 
 
