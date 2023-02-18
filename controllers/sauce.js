@@ -102,19 +102,21 @@ exports.modifySauce = async (req, res, next) => {
 
 
     //test
-
     if (req.file) {
-        await cloudinary.uploader.destroy(sauce.cloudinary_id);
-        result = await cloudinary.uploader.upload(req.file.path);
-       
-      }
-      sauceObject = {
-        //  ...JSON.parse(req.body),
-
+      await cloudinary.uploader.destroy(sauce.cloudinary_id);
+      result = await cloudinary.uploader.upload(req.file.path);
+     
+    }
+    sauceObject = req.file
+    ? {
         ...req.body,
-        imageUrl: result.secure_url || sauce.secure_url,
-        cloudinary_id: result.public_id || sauce.public_id,
+        imageUrl: result.secure_url,
+        cloudinary_id: result.public_id,
+      }
+    : {
+        ...req.body,
       };
+   
       
     delete sauceObject._userID;
 
