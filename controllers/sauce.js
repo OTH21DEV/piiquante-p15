@@ -91,6 +91,7 @@ exports.modifySauce = async (req, res, next) => {
         cloudinary_id: result.public_id,
       };
     } else {
+      console.log('test')
       sauceObject = {
         //  ...JSON.parse(req.body),
 
@@ -116,7 +117,7 @@ exports.modifySauce = async (req, res, next) => {
 
     delete sauceObject._userID;
 
-    // Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+    Sauce.findOne({ _id: req.params.id }).then((sauce) => {
     //   console.log(sauce);
       if (sauce.userId != req.auth.userId) {
         res.status(401).json({ message: "Not authorized" });
@@ -130,7 +131,7 @@ exports.modifySauce = async (req, res, next) => {
         res.json(sauce);
         */
       }
-    //});
+    });
   } catch (error) {
     res.status(402).json({ error });
   }
