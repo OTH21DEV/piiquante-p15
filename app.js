@@ -57,7 +57,7 @@ app.use("/api/sauces", sauceRoutes);
 
 
 /*TEST  */
-
+/*
  app.use(express.static(path.join(__dirname + "/../build")));
 //add path to index.html for Heroku server:
 
@@ -67,16 +67,16 @@ app.get("*", (req, res, next) => {
 });
 
 
-
+*/
 ////////////////////////BUILD FOR HEROKU
 
-/*
+
 app.use(express.static('./build/'));
 
 app.get('/*', (req, res) => {
   res.sendFile('index.html', { root: 'build/' });
 });
-*/
+
 
 
 
