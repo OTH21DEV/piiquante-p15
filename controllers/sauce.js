@@ -74,7 +74,7 @@ exports.createSauce = async (req, res, next) => {
 // otherwise we take entering Object
 
 exports.modifySauce = async (req, res, next) => {
-  console.log(req.file)
+  console.log(req.file);
   // try {
   //   let sauce = await Sauce.findById(req.params.id);
 
@@ -103,14 +103,11 @@ exports.modifySauce = async (req, res, next) => {
   //     };
   //   }
 
-  var stream = cloudinary.uploader.upload_stream(function(result) { console.log(result); });
-//var file_reader = fs.createReadStream('my_picture.jpg', {encoding: 'binary'}).on('data', stream.write).on('end', stream.end)
-
-
-
-
-
-
+  var stream = cloudinary.uploader.upload_stream(function (result) {
+    console.log(result);
+  });
+  console.log(stream)
+  //var file_reader = fs.createReadStream('my_picture.jpg', {encoding: 'binary'}).on('data', stream.write).on('end', stream.end)
 
   //   delete sauceObject._userID;
 
