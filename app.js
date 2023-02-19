@@ -60,9 +60,9 @@ app.use("/api/sauces", sauceRoutes);
 ////////////////////////BUILD FOR HEROKU
 
 
-app.use(express.static('./build/'));
+//app.use(express.static('./build/'));
 
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile('index.html', { root: 'build/' });
 });
 
