@@ -75,60 +75,63 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   console.log(req.file)
-  try {
-    let sauce = await Sauce.findById(req.params.id);
+  // try {
+  //   let sauce = await Sauce.findById(req.params.id);
 
-    let result;
+  //   let result;
 
-    let sauceObject;
-    if (req.file) {
-      console.log('test 2')
-      await cloudinary.uploader.destroy(sauce.cloudinary_id);
-      result = await cloudinary.uploader.upload(req.file.path);
-      sauceObject = {
-        //  ...JSON.parse(req.body),
+  //   let sauceObject;
+  //   if (req.file) {
+  //     console.log('test 2')
+  //     await cloudinary.uploader.destroy(sauce.cloudinary_id);
+  //     result = await cloudinary.uploader.upload(req.file.path);
+  //     sauceObject = {
+  //       //  ...JSON.parse(req.body),
 
-        ...req.body,
-        imageUrl: result.secure_url,
-        cloudinary_id: result.public_id,
-      };
-    } else {
-      console.log('test')
-      sauceObject = {
-        //  ...JSON.parse(req.body),
+  //       ...req.body,
+  //       imageUrl: result.secure_url,
+  //       cloudinary_id: result.public_id,
+  //     };
+  //   } else {
+  //     console.log('test')
+  //     sauceObject = {
+  //       //  ...JSON.parse(req.body),
 
-        ...req.body,
-        imageUrl: sauce.secure_url,
-        cloudinary_id: sauce.public_id,
-      };
-    }
+  //       ...req.body,
+  //       imageUrl: sauce.secure_url,
+  //       cloudinary_id: sauce.public_id,
+  //     };
+  //   }
 
-
-   
-
-
+  var stream = cloudinary.uploader.upload_stream(function(result) { console.log(result); });
+//var file_reader = fs.createReadStream('my_picture.jpg', {encoding: 'binary'}).on('data', stream.write).on('end', stream.end)
 
 
-    delete sauceObject._userID;
 
-    Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-    //   console.log(sauce);
-      if (sauce.userId != req.auth.userId) {
-        res.status(401).json({ message: "Not authorized" });
-      } else {
-        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }).then(() => {
-          res.status(200).json({ message: "Sauce modified" });
-        });
 
-        /*
-        sauce =  Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
-        res.json(sauce);
-        */
-      }
-    });
-  } catch (error) {
-    res.status(402).json({ error });
-  }
+
+
+
+  //   delete sauceObject._userID;
+
+  //   Sauce.findOne({ _id: req.params.id }).then((sauce) => {
+  //   //   console.log(sauce);
+  //     if (sauce.userId != req.auth.userId) {
+  //       res.status(401).json({ message: "Not authorized" });
+  //     } else {
+  //       Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }).then(() => {
+  //         res.status(200).json({ message: "Sauce modified" });
+  //       });
+
+  //       /*
+  //       sauce =  Sauce.findByIdAndUpdate(req.params.id, sauceObject, { new: true });
+  //       res.json(sauce);
+  //       */
+  //     }
+  //   });
+  // } catch (error) {
+  //   res.status(402).json({ error });
+  // }
 };
 
 //V TUTO
