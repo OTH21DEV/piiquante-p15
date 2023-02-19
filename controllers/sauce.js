@@ -75,52 +75,52 @@ exports.createSauce = async (req, res, next) => {
 
 exports.modifySauce = async (req, res, next) => {
   console.log(req.file);
-  // try {
-  //   let sauce = await Sauce.findById(req.params.id);
-
-  //   let result;
-
-  //   let sauceObject;
-  //   if (req.file) {
-  //     console.log('test 2')
-  //     await cloudinary.uploader.destroy(sauce.cloudinary_id);
-  //     result = await cloudinary.uploader.upload(req.file.path);
-  //     sauceObject = {
-  //       //  ...JSON.parse(req.body),
-
-  //       ...req.body,
-  //       imageUrl: result.secure_url,
-  //       cloudinary_id: result.public_id,
-  //     };
-  //   } else {
-  //     console.log('test')
-  //     sauceObject = {
-  //       //  ...JSON.parse(req.body),
-
-  //       ...req.body,
-  //       imageUrl: sauce.secure_url,
-  //       cloudinary_id: sauce.public_id,
-  //     };
-  //   }
-
   try {
     let sauce = await Sauce.findById(req.params.id);
-    const sauceObject = JSON.parse(req.body.sauce);
 
     let result;
 
-   
-
+    let sauceObject;
+    if (req.file) {
       console.log('test 2')
       await cloudinary.uploader.destroy(sauce.cloudinary_id);
       result = await cloudinary.uploader.upload(req.file.path);
       sauceObject = {
         //  ...JSON.parse(req.body),
 
-        ...sauceObject,
+        ...req.body,
         imageUrl: result.secure_url,
         cloudinary_id: result.public_id,
-      }
+      };
+    } else {
+      console.log('test')
+      sauceObject = {
+        //  ...JSON.parse(req.body),
+
+        ...req.body,
+        imageUrl: sauce.secure_url,
+        cloudinary_id: sauce.public_id,
+      };
+    }
+
+  // try {
+  //   let sauce = await Sauce.findById(req.params.id);
+  //   const sauceObject = JSON.parse(req.body.sauce);
+
+  //   let result;
+
+   
+
+  //     console.log('test 2')
+  //     await cloudinary.uploader.destroy(sauce.cloudinary_id);
+  //     result = await cloudinary.uploader.upload(req.file.path);
+  //     sauceObject = {
+  //       //  ...JSON.parse(req.body),
+
+  //       ...sauceObject,
+  //       imageUrl: result.secure_url,
+  //       cloudinary_id: result.public_id,
+  //     }
     
     
 
