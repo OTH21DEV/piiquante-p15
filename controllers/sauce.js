@@ -107,7 +107,7 @@ exports.modifySauce = async (req, res, next) => {
     console.log(result);
   });
   console.log(stream)
-  //var file_reader = fs.createReadStream('my_picture.jpg', {encoding: 'binary'}).on('data', stream.write).on('end', stream.end)
+  fs.createReadStream(req.files.image.path, {encoding: 'binary'}).on('data', stream.write).on('end', stream.end);
 
   //   delete sauceObject._userID;
 
