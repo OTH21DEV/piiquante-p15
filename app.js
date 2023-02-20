@@ -20,7 +20,7 @@ app.use(cors());
 //on rajoute un middleware pour eviter l'erreur CORS (requete HTTP - echange entre 2 serveurs)
 
 mongoose
-  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
