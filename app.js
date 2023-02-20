@@ -8,7 +8,8 @@ const sauceRoutes = require("./routes/sauce");
 //on rajoute package mongoose pour MongoDB ATlas
 
 const mongoose = require("mongoose");
-
+const dotenv = require('dotenv')
+dotenv.config()
 
 
 
@@ -19,7 +20,7 @@ app.use(cors());
 //on rajoute un middleware pour eviter l'erreur CORS (requete HTTP - echange entre 2 serveurs)
 
 mongoose
-  .connect("mongodb+srv://admin:Coucou1984@cluster0.b4hdjgg.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
