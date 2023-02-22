@@ -23,19 +23,19 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   //verify if user exists in Mongo DB
-   User.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-       return res.status(401).json({ message: "incorrect credentials" });
+        return res.status(401).json({ message: "incorrect credentials" });
       }
       //compare if given password (req.body.password) is the same as in
       //MongoDb (user.password)
       else {
-      bcrypt
-          .compare (req.body.password, user.password)
+        bcrypt
+          .compare(req.body.password, user.password)
           .then((valid) => {
             if (!valid) {
-             return res.status(402).json({ message: "incorrect credentials" });
+              return res.status(402).json({ message: "incorrect credentials" });
             } else {
               //send the info with userId and token
               res.status(200).json({

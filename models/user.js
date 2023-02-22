@@ -1,16 +1,13 @@
-const mongoose = require('mongoose')
-const uniqueValidator= require('mongoose-unique-validator')
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
-//creation du schema de données user por mail et mdp
-/*unique permet de s'assurer que adresse email est unique et impeche de s'inscrire 
-plusiers fois avec la meme adresse , on rajoute un plus package mongoose-unique-validator
-
+/*
+mongoose-unique-validator checks the email if it's used once
 */
 const userSchema = mongoose.Schema({
-email:{type:String, required:true,unique:true},
-password:{type:String,required:true}
-})
-//on applique le plugin de validator au Schema avant de creer le model User
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+});
 
 userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model("User", userSchema);
